@@ -66,7 +66,11 @@ def my_simple_dbt_dag():
         task_id="query_table",
         postgres_conn_id=CONNECTION_ID,
         sql=f"SELECT * FROM {DB_NAME}.{SCHEMA_NAME}.{MODEL_TO_QUERY}",
+        show_return_value_in_logs="True",
+        
     )
+
+
 # f = SQLExecuteQueryOperator(
 # 	conn_id="None",
 # 	database="None",
