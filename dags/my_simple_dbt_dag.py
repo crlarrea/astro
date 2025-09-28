@@ -19,7 +19,7 @@ from cosmos.profiles import PostgresUserPasswordProfileMapping
 from pendulum import datetime
 import os
 
-YOUR_NAME = "postgres.zqhxaibyetmpgfhnvvls"  # replace with your name
+YOUR_NAME = "testing dbt + airflow"  # replace with your name
 CONNECTION_ID = "db_conn"
 DB_NAME = "postgres"
 SCHEMA_NAME = "public"
@@ -46,28 +46,27 @@ execution_config = ExecutionConfig(
 
 @dag(
     start_date=datetime(2023, 8, 1),
-    schedule=None,
+    schedule='0 1 * * *',
     catchup=False,
     params={"my_name": YOUR_NAME},
 )
 def my_simple_dbt_dag():
-    # transform_data = DbtTaskGroup(
-    #     group_id="transform_data",
-    #     project_config=ProjectConfig(DBT_PROJECT_PATH),
-    #     profile_config=profile_config,
-    #     execution_config=execution_config,
-    #     # operator_args={
-    #     #     "vars": '{"my_name": {{ params.my_name }} }',
-    #     # },
-    #     default_args={"retries": 2},
-    # )
+    transform_data = DbtTaskGroup(
+        group_id="transform_data",
+        project_config=ProjectConfig(DBT_PROJECT_PATH),
+        profile_config=profile_config,
+        execution_config=execution_config,
+        operator_args={
+            "vars": '{"my_name": {{ params.my_name }} }',
+        },
+        default_args={"retries": 2},
+    )
 
     query_table = PostgresOperator(
         task_id="query_table",
         postgres_conn_id=CONNECTION_ID,
         sql=f"SELECT * FROM {DB_NAME}.{SCHEMA_NAME}.{MODEL_TO_QUERY}",
-        show_return_value_in_logs="True",
-        
+        show_return_value_in_logs="True"
     )
 
 
@@ -89,8 +88,8 @@ def my_simple_dbt_dag():
 
 
 
-    # transform_data >> query_table
-    query_table
+    transform_data >> query_table
+    # query_table
 
 
 my_simple_dbt_dag()
