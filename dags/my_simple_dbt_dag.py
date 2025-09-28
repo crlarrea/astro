@@ -46,9 +46,10 @@ execution_config = ExecutionConfig(
 
 @dag(
     start_date=datetime(2023, 8, 1),
-    schedule='0 1 * * *',
+    schedule='15 * * * *',
     catchup=False,
     params={"my_name": YOUR_NAME},
+    tags=["dbt"],
 )
 def my_simple_dbt_dag():
     transform_data = DbtTaskGroup(
