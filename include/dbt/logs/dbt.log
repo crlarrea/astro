@@ -1,0 +1,51 @@
+[0m12:19:23.885297 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bfafcb0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d4db9d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d4dbb10>]}
+
+
+============================== 12:19:23.888235 | a4a554c0-df0d-440e-a5d2-455058676e85 ==============================
+[0m12:19:23.888235 [info ] [MainThread]: Running with dbt=1.10.13
+[0m12:19:23.888540 [debug] [MainThread]: running dbt with arguments {'invocation_command': 'dbt init', 'profiles_dir': '/Users/christianlarrea/.dbt', 'printer_width': '80', 'warn_error': 'None', 'send_anonymous_usage_stats': 'True', 'fail_fast': 'False', 'log_cache_events': 'False', 'no_print': 'None', 'version_check': 'True', 'write_json': 'True', 'debug': 'False', 'log_format': 'default', 'partial_parse': 'True', 'use_experimental_parser': 'False', 'empty': 'None', 'static_parser': 'True', 'introspect': 'True', 'quiet': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'cache_selected_only': 'False', 'target_path': 'None', 'log_path': 'logs', 'use_colors': 'True', 'indirect_selection': 'eager'}
+[0m12:19:25.590907 [debug] [MainThread]: Starter project path: /opt/homebrew/lib/python3.13/site-packages/dbt/include/starter_project
+[0m12:19:25.604739 [info ] [MainThread]: 
+Your new dbt project "larrea" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m12:19:25.605396 [info ] [MainThread]: Setting up your profile.
+[0m12:20:17.630256 [info ] [MainThread]: Profile larrea written to /Users/christianlarrea/.dbt/profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m12:20:17.642740 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 53.79994, "process_in_blocks": "0", "process_kernel_time": 0.194717, "process_mem_max_rss": "106020864", "process_out_blocks": "0", "process_user_time": 0.696489}
+[0m12:20:17.648350 [debug] [MainThread]: Command `dbt init` succeeded at 12:20:17.646875 after 53.81 seconds
+[0m12:20:17.653387 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d57b100>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10ce6d6d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d599480>]}
+[0m12:20:17.653855 [debug] [MainThread]: Flushing usage events
+[0m12:20:18.183002 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m12:20:27.335003 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1079dbcb0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108f079d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108f07b10>]}
+
+
+============================== 12:20:27.337890 | da1935b5-7885-4e60-9a51-b67cd2eef7a7 ==============================
+[0m12:20:27.337890 [info ] [MainThread]: Running with dbt=1.10.13
+[0m12:20:27.338203 [debug] [MainThread]: running dbt with arguments {'log_path': 'logs', 'quiet': 'False', 'log_cache_events': 'False', 'use_colors': 'True', 'printer_width': '80', 'invocation_command': 'dbt debug', 'profiles_dir': '/Users/christianlarrea/.dbt', 'empty': 'None', 'static_parser': 'True', 'fail_fast': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'warn_error': 'None', 'target_path': 'None', 'debug': 'False', 'cache_selected_only': 'False', 'introspect': 'True', 'partial_parse': 'True', 'log_format': 'default', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'write_json': 'True', 'no_print': 'None', 'send_anonymous_usage_stats': 'True', 'version_check': 'True'}
+[0m12:20:27.350549 [info ] [MainThread]: dbt version: 1.10.13
+[0m12:20:27.350767 [info ] [MainThread]: python version: 3.13.5
+[0m12:20:27.350911 [info ] [MainThread]: python path: /opt/homebrew/opt/python@3.13/bin/python3.13
+[0m12:20:27.351043 [info ] [MainThread]: os info: macOS-26.2-arm64-arm-64bit-Mach-O
+[0m12:20:27.397659 [info ] [MainThread]: Using profiles dir at /Users/christianlarrea/.dbt
+[0m12:20:27.397880 [info ] [MainThread]: Using profiles.yml file at /Users/christianlarrea/.dbt/profiles.yml
+[0m12:20:27.398015 [info ] [MainThread]: Using dbt_project.yml file at /Users/christianlarrea/Desktop/astro/include/dbt/dbt_project.yml
+[0m12:20:27.398181 [error] [MainThread]: Encountered an error:
+Internal Error
+  Profile should not be None if loading profile completed
+[0m12:20:27.399745 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": false, "command_wall_clock_time": 0.11055154, "process_in_blocks": "0", "process_kernel_time": 0.138643, "process_mem_max_rss": "108756992", "process_out_blocks": "0", "process_user_time": 0.679371}
+[0m12:20:27.399975 [debug] [MainThread]: Command `dbt debug` failed at 12:20:27.399929 after 0.11 seconds
+[0m12:20:27.400132 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108fa7e10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1090a3770>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108fc69c0>]}
+[0m12:20:27.400296 [debug] [MainThread]: Flushing usage events
+[0m12:20:27.914847 [debug] [MainThread]: An error was encountered while trying to flush usage events
