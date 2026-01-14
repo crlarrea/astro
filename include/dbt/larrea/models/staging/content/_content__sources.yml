@@ -1,0 +1,7 @@
+sources:
+  - name: content
+    database: postgres  
+    schema: public  
+    tables:
+      - name: books
+      - name: articles
