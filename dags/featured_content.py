@@ -7,8 +7,9 @@ an Airflow connection and injecting a variable into the dbt project.
 
 from airflow.sdk import dag, chain
 from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
-from cosmos import DbtTaskGroup, ProjectConfig, ProfileConfig, ExecutionConfig
+from cosmos import DbtTaskGroup, ProjectConfig, ProfileConfig, RenderConfig
 from pendulum import datetime
+from cosmos.constants import LoadMode
 
 # adjust for other database types
 from cosmos.profiles.postgres import PostgresUserPasswordProfileMapping
@@ -37,6 +38,10 @@ profile_config = ProfileConfig(
         profile_args={"schema": SOURCE_SCHEMA_NAME},
     ),
 )
+render_config=RenderConfig(
+        load_method=LoadMode.DBT_MANIFEST,
+        render_source_nodes=True,   # 👈 THIS IS THE IMPORTANT PART
+    )
 
 # OPTIONAL: The path where Cosmos will find the dbt executable
 # execution_config = ExecutionConfig(
