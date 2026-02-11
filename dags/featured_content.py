@@ -39,10 +39,8 @@ profile_config = ProfileConfig(
         profile_args={"schema": SOURCE_SCHEMA_NAME},
     ),
 )
-render_config=RenderConfig(
-        load_method=LoadMode.DBT_MANIFEST,
-        source_rendering_behavior=all
-    )
+render_config=RenderConfig(source_rendering_behavior=SourceRenderingBehavior.ALL),
+
 
 # OPTIONAL: The path where Cosmos will find the dbt executable
 # execution_config = ExecutionConfig(
@@ -64,6 +62,8 @@ def featured_content():
         group_id="featured_content",
         project_config=ProjectConfig(DBT_PROJECT_PATH),
         profile_config=profile_config,
+        render_config=render_config,
+
         # OPTIONAL: your execution config if you are using a virtual environment
         # execution_config=execution_config,
         operator_args={
