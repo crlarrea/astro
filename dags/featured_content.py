@@ -11,6 +11,7 @@ from cosmos import DbtTaskGroup, ProjectConfig, ProfileConfig, RenderConfig
 from pendulum import datetime
 from cosmos.constants import LoadMode
 
+
 # adjust for other database types
 from cosmos.profiles.postgres import PostgresUserPasswordProfileMapping
 import os
@@ -40,7 +41,7 @@ profile_config = ProfileConfig(
 )
 render_config=RenderConfig(
         load_method=LoadMode.DBT_MANIFEST,
-        render_source_nodes=True,   # 👈 THIS IS THE IMPORTANT PART
+        render_source_nodes=True
     )
 
 # OPTIONAL: The path where Cosmos will find the dbt executable
