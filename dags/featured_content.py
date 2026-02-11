@@ -21,7 +21,6 @@ DB_NAME = "postgres"
 
 SOURCE_SCHEMA_NAME= "public"
 API_SCHEMA_NAME = "api"
-MODEL_TO_QUERY = "featured_book"
 # The path to the dbt project
 DBT_PROJECT_PATH = f"{os.environ['AIRFLOW_HOME']}/include/dbt/larrea"
 
@@ -67,13 +66,18 @@ def featured_content():
         default_args={"retries": 2},
     )
 
-    expose_to_api = SQLExecuteQueryOperator(
-        task_id="expose_to_api",
+    featured_book_api = SQLExecuteQueryOperator(
+        task_id="featured_book_api",
         conn_id=CONNECTION_ID,
-        sql=f"TRUNCATE {API_SCHEMA_NAME}.{MODEL_TO_QUERY}; INSERT INTO {DB_NAME}.{API_SCHEMA_NAME}.{MODEL_TO_QUERY} (SELECT * FROM {DB_NAME}.{SOURCE_SCHEMA_NAME}.{MODEL_TO_QUERY})",
+        sql=f"TRUNCATE {API_SCHEMA_NAME}.feautred_book; INSERT INTO {DB_NAME}.{API_SCHEMA_NAME}.featured_book (SELECT * FROM {DB_NAME}.{SOURCE_SCHEMA_NAME}.featured_book)",
+    )
+    featured_article_api = SQLExecuteQueryOperator(
+        task_id="featured_article_api",
+        conn_id=CONNECTION_ID,
+        sql=f"TRUNCATE {API_SCHEMA_NAME}.featured_article; INSERT INTO {DB_NAME}.{API_SCHEMA_NAME}.featured_article (SELECT * FROM {DB_NAME}.{SOURCE_SCHEMA_NAME}.featured_article)",
     )
 
-    chain(transform_data, expose_to_api)
+    chain(transform_data, [featured_book_api, featured_article_api])
 
 
 featured_content()
