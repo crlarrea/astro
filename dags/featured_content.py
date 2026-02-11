@@ -41,7 +41,7 @@ profile_config = ProfileConfig(
 )
 render_config=RenderConfig(
         load_method=LoadMode.DBT_MANIFEST,
-        source_pruning=True
+        source_rendering_behavior=all
     )
 
 # OPTIONAL: The path where Cosmos will find the dbt executable
