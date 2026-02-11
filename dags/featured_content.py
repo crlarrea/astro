@@ -9,7 +9,8 @@ from airflow.sdk import dag, chain
 from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
 from cosmos import DbtTaskGroup, ProjectConfig, ProfileConfig, RenderConfig
 from pendulum import datetime
-from cosmos.constants import LoadMode
+from cosmos.constants import SourceRenderingBehavior
+
 
 
 # adjust for other database types
