@@ -36,6 +36,16 @@ models:
   larrea:
     # Config indicated by + and applies to all files under models/example/
     staging:
-      +materialized: view
+      +materialized: view        
+    intermediate:
+      content:
+        int_content__featured_book:
+          +materialized: table        
     marts:
       +materialized: table
+      +post-hook:
+        - ALTER TABLE {{ this }} ENABLE ROW LEVEL SECURITY;
+        - ALTER TABLE {{ this }} FORCE ROW LEVEL SECURITY;
+        - DROP POLICY IF EXISTS "Enable read access for all users" ON {{ this }};
+        - create policy "Enable read access for all users" on {{this}} as PERMISSIVE for SELECT to public using (true);
+

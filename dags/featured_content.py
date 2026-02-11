@@ -8,6 +8,7 @@ an Airflow connection and injecting a variable into the dbt project.
 from airflow.sdk import dag, chain
 from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
 from cosmos import DbtTaskGroup, ProjectConfig, ProfileConfig, ExecutionConfig
+from pendulum import datetime
 
 # adjust for other database types
 from cosmos.profiles.postgres import PostgresUserPasswordProfileMapping
@@ -16,8 +17,11 @@ import os
 YOUR_NAME = "Christian Larrea"
 CONNECTION_ID = "db_conn"
 DB_NAME = "postgres"
-SCHEMA_NAME = "dbt"
-MODEL_TO_QUERY = "model2"
+
+
+SOURCE_SCHEMA_NAME= "public"
+API_SCHEMA_NAME = "api"
+MODEL_TO_QUERY = "featured_book"
 # The path to the dbt project
 DBT_PROJECT_PATH = f"{os.environ['AIRFLOW_HOME']}/include/dbt/larrea"
 
@@ -31,7 +35,7 @@ profile_config = ProfileConfig(
     target_name="dev",
     profile_mapping=PostgresUserPasswordProfileMapping(
         conn_id=CONNECTION_ID,
-        profile_args={"schema": SCHEMA_NAME},
+        profile_args={"schema": SOURCE_SCHEMA_NAME},
     ),
 )
 
@@ -43,10 +47,16 @@ profile_config = ProfileConfig(
 
 @dag(
     params={"my_name": YOUR_NAME},
+    start_date=datetime(2026, 1, 10),
+    schedule="@daily",
+    doc_md=__doc__,
+    default_args={"owner": "Astro", "retries": 3},
+    tags=["content"],
 )
-def my_simple_dbt_dag():
+
+def featured_content():
     transform_data = DbtTaskGroup(
-        group_id="transform_data",
+        group_id="featured_content",
         project_config=ProjectConfig(DBT_PROJECT_PATH),
         profile_config=profile_config,
         # OPTIONAL: your execution config if you are using a virtual environment
@@ -57,13 +67,13 @@ def my_simple_dbt_dag():
         default_args={"retries": 2},
     )
 
-    # query_table = SQLExecuteQueryOperator(
-    #     task_id="query_table",
-    #     conn_id=CONNECTION_ID,
-    #     sql=f"SELECT * FROM {DB_NAME}.{SCHEMA_NAME}.{MODEL_TO_QUERY}",
-    # )
+    expose_to_api = SQLExecuteQueryOperator(
+        task_id="expose_to_api",
+        conn_id=CONNECTION_ID,
+        sql=f"TRUNCATE {API_SCHEMA_NAME}.{MODEL_TO_QUERY}; INSERT INTO {DB_NAME}.{API_SCHEMA_NAME}.{MODEL_TO_QUERY} (SELECT * FROM {DB_NAME}.{SOURCE_SCHEMA_NAME}.{MODEL_TO_QUERY})",
+    )
 
-    chain(transform_data)
+    chain(transform_data, expose_to_api)
 
 
-my_simple_dbt_dag()
+featured_content()
