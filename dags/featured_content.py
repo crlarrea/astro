@@ -69,7 +69,7 @@ def featured_content():
     featured_book_api = SQLExecuteQueryOperator(
         task_id="featured_book_api",
         conn_id=CONNECTION_ID,
-        sql=f"TRUNCATE {API_SCHEMA_NAME}.feautred_book; INSERT INTO {DB_NAME}.{API_SCHEMA_NAME}.featured_book (SELECT * FROM {DB_NAME}.{SOURCE_SCHEMA_NAME}.featured_book)",
+        sql=f"TRUNCATE {API_SCHEMA_NAME}.featured_book; INSERT INTO {DB_NAME}.{API_SCHEMA_NAME}.featured_book (SELECT * FROM {DB_NAME}.{SOURCE_SCHEMA_NAME}.featured_book)",
     )
     featured_article_api = SQLExecuteQueryOperator(
         task_id="featured_article_api",
