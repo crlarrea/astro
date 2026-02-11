@@ -40,7 +40,7 @@ profile_config = ProfileConfig(
         profile_args={"schema": SOURCE_SCHEMA_NAME},
     ),
 )
-render_config=RenderConfig(source_rendering_behavior=SourceRenderingBehavior.ALL),
+render_config=RenderConfig(source_rendering_behavior=SourceRenderingBehavior.ALL)
 
 
 # OPTIONAL: The path where Cosmos will find the dbt executable
