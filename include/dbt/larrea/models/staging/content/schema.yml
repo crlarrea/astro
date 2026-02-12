@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: stg_content__articles
+    columns:
+      - name: article_id
+        descripton: "A uuid that uniquely identifies the article."
+        tests:
+          - unique
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              arguments:
+                column_type: uuid
+      - name: article_title
+      - name: slug
+      - name: article_short_description
+      - name: article_body
+      - name: article_image
+      - name: taxonomies
+      - name: created_at
+      - name: updated_at
+        description: "A timestamp that indicates when the article was last updated."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              arguments:
+                column_type: timestamp with time zone
