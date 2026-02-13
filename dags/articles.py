@@ -61,7 +61,7 @@ render_config=RenderConfig(source_rendering_behavior=SourceRenderingBehavior.ALL
 def articles():
 
     articles_api = SQLExecuteQueryOperator(
-        task_id="featured_book_api",
+        task_id="articles_api",
         conn_id=CONNECTION_ID,
         sql=f"TRUNCATE {API_SCHEMA_NAME}.articles; INSERT INTO {DB_NAME}.{API_SCHEMA_NAME}.articles (SELECT * FROM {DB_NAME}.{SOURCE_SCHEMA_NAME}.articles)",
     )
