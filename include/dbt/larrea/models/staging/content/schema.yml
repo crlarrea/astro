@@ -52,9 +52,13 @@ models:
                 min_value: 50
                 max_value: 300      
       - name: article_body
+        description: "The content of the article."
       - name: article_image
+        description: "The hero image associated with the article."
       - name: taxonomies
+        description: "The taxonomies the article belongs to."
       - name: created_at
+        description: "A timestamp that indicates when the article was created."
       - name: updated_at
         description: "A timestamp that indicates when the article was last updated."
         tests:
