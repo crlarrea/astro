@@ -58,15 +58,43 @@ render_config=RenderConfig(source_rendering_behavior=SourceRenderingBehavior.ALL
     tags=["content"],
 )
 
-def articles():
+def featured_content():
+    transform_data = DbtTaskGroup(
+        group_id="featured_content",
+        project_config=ProjectConfig(DBT_PROJECT_PATH),
+        profile_config=profile_config,
+        render_config=render_config,
 
+        # OPTIONAL: your execution config if you are using a virtual environment
+        # execution_config=execution_config,
+        operator_args={
+            "vars": '{"my_name": {{ params.my_name }} }',
+        },
+        default_args={"retries": 2},
+    )
+
+    featured_book_api = SQLExecuteQueryOperator(
+        task_id="featured_book_api",
+        conn_id=CONNECTION_ID,
+        sql=f"TRUNCATE {API_SCHEMA_NAME}.featured_book; INSERT INTO {DB_NAME}.{API_SCHEMA_NAME}.featured_book (SELECT * FROM {DB_NAME}.{SOURCE_SCHEMA_NAME}.featured_book)",
+    )
+    featured_article_api = SQLExecuteQueryOperator(
+        task_id="featured_article_api",
+        conn_id=CONNECTION_ID,
+        sql=f"TRUNCATE {API_SCHEMA_NAME}.featured_article; INSERT INTO {DB_NAME}.{API_SCHEMA_NAME}.featured_article (SELECT * FROM {DB_NAME}.{SOURCE_SCHEMA_NAME}.featured_article)",
+    )
+    featured_post_api = SQLExecuteQueryOperator(
+        task_id="featured_post_api",
+        conn_id=CONNECTION_ID,
+        sql=f"TRUNCATE {API_SCHEMA_NAME}.featured_post; INSERT INTO {DB_NAME}.{API_SCHEMA_NAME}.featured_post (SELECT * FROM {DB_NAME}.{SOURCE_SCHEMA_NAME}.featured_post)",
+    )
     articles_api = SQLExecuteQueryOperator(
         task_id="articles_api",
         conn_id=CONNECTION_ID,
         sql=f"TRUNCATE {API_SCHEMA_NAME}.articles; INSERT INTO {DB_NAME}.{API_SCHEMA_NAME}.articles (SELECT * FROM {DB_NAME}.{SOURCE_SCHEMA_NAME}.articles)",
     )
-    
-    articles_api
+
+    chain(transform_data, [featured_book_api, featured_article_api, featured_post_api, articles_api])
 
 
-articles()
+featured_content()

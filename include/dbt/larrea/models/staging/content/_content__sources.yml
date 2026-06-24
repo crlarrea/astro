@@ -5,3 +5,4 @@ sources:
     tables:
       - name: books
       - name: articles
+      - name: microblog
